@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { loggedIn, loggedOut } from '../slices/authSlice';
+import { loggedIn, loggedOut, authError } from '../slices/authSlice';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -14,6 +14,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Alert from 'react-bootstrap/Alert';
+import React, { useState } from 'react';
+import AlertAuth from '../components/AlertAuth';
 
 const Login = () => {
 
@@ -48,19 +50,17 @@ const Login = () => {
           navigate("/");
         })
         .catch((err) => {
-          alert(err);
-
+          const message = err.message;
+          dispatch(authError({ message }));
         })
     },
   });
 
   return (
 
-    <>
+  <>
 
-<Alert key="danger" variant="danger" dismissible>
-          This is a danger alert—check it out!
-        </Alert>
+  <AlertAuth />
 
   <Container fluid className="h-100 d-flex flex-column">
   <Row className="justify-content-center align-content-center h-100">
