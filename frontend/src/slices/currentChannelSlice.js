@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  currentChannelId: '1',
+  currentChannelId: 1,
 }
 
 const currentChannelSlice = createSlice({

@@ -46,7 +46,7 @@ const Login = () => {
           // }
           localStorage.setItem('token', res.data.token);
           localStorage.setItem('username', res.data.username);
-          dispatch(loggedIn());
+          dispatch(loggedIn(res.data.username));
           navigate("/");
         })
         .catch((err) => {
