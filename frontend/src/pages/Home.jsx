@@ -13,7 +13,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import cn from 'classnames';
-import Chats from "../components/Chats";
+import Channels from '../components/Channels';
 import MessageTextInput from "../components/MessageTextInput";
 import ChatMessages from '../components/ChatMessages';
 
@@ -67,10 +67,11 @@ const Home = () => {
   
 
   return (
+    
     <Container className="h-100 my-4 overflow-hidden rounded shadow">
       <Row className="h-100 bg-white flex-md-row">
         <Col xs={4} md={2} className="border-end pt-5 px-0 bg-light">
-          <Chats />
+          <Channels />
         </Col>
         <Col className="p-0 h-100">
           <div className="d-flex flex-column h-100">

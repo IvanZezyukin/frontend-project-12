@@ -2,6 +2,7 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { loggedOut } from '../slices/authSlice';
 import Button from 'react-bootstrap/Button';
+import AddChannelModal from './AddChannelModal';
 
 const Layout = () => {
 
@@ -27,6 +28,8 @@ const Layout = () => {
         </div>
       </nav>
     </header>
+
+    <AddChannelModal />
 
     <Outlet />
 
