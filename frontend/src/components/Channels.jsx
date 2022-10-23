@@ -5,6 +5,9 @@ import cn from 'classnames';
 import { setCurrentChannelId, setCurrentChannelName } from "../slices/currentChannelSlice";
 import { useDispatch } from "react-redux";
 import { showAddChannelModal } from "../slices/channelOptionsSlice";
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 const Channels = () => {
 
@@ -27,20 +30,41 @@ const Channels = () => {
           </Container>
           <ul className="nav flex-column nav-pills nav-fill px-2">
             {channels.ids.map((id) => {
-              const channelButtonClassNames = cn('w-100', 'rounded-0', 'text-start', 'btn', 'border-0', {
-                'btn-secondary': id === currentChannelId,
-              })
+
+              const channelButtonClassNames = cn('rounded-0', 'shadow-none', 'border-0', 'text-truncate', 'text-start', 'w-100', {
+                'text-white': id === currentChannelId,
+              });
+              const channelButtonMenuClassNames = cn('rounded-0', 'shadow-none', 'border-0', {
+                'text-white': id === currentChannelId,
+              });
+
               return (
                 <li className="nav-item w-100" key={id}>
-                  <button type="button" className={channelButtonClassNames} onClick={() => {
+
+                  <Dropdown as={ButtonGroup} className="w-100 ">
+                    <Button active={id === currentChannelId} variant={id === currentChannelId ? 'secondary' : 'light'} className={channelButtonClassNames} onClick={() => {
                      dispatch(setCurrentChannelId(id));
                      dispatch(setCurrentChannelName(channels.entities[id].name));
                      }}>
-                    <span className="me-1">
-                    #
-                    </span>
-                    {channels.entities[id].name}
-                  </button>
+                      <span className="me-1">
+                      #
+                      </span>
+                      {channels.entities[id].name}
+                    </Button>
+                    {!channels.entities[id].removable ? (
+                      null
+                      ) : (
+                        <>
+                        <Dropdown.Toggle active={id === currentChannelId} split variant={id === currentChannelId ? 'secondary' : 'light'} className={channelButtonMenuClassNames} />
+                        <Dropdown.Menu>
+                          <Dropdown.Item href="#/action-1">Удалить</Dropdown.Item>
+                          <Dropdown.Item href="#/action-2">Переименовать</Dropdown.Item>
+                        </Dropdown.Menu>
+                        </>
+                        )}
+                    
+                  </Dropdown>
+
                 </li>
               )
             })}

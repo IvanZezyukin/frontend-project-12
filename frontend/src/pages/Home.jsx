@@ -38,7 +38,7 @@ const Home = () => {
     })
       .then((res) => {
         batch(() => {
-          console.log(res.data);
+          //console.log(res.data);
           const currentChannelName = res.data.channels.filter((channel) => channel.id === res.data.currentChannelId).map((channel) => channel.name)[0];
           dispatch(addChannels(res.data.channels));
           //dispatch(setCurrentChannelId(res.data.currentChannelId));
