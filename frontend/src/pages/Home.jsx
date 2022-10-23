@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch, batch } from 'react-redux';
 import { loggedIn, loggedOut } from "../slices/authSlice";
 import { addChannel, addChannels, removeChannel, updateChannel } from "../slices/channelsSlice";
-import { setCurrentChannelId } from "../slices/currentChannelSlice";
+import { setCurrentChannelId, setCurrentChannelName } from "../slices/currentChannelSlice";
 import { addMessage, addMessages, removeMessage, updateMessage } from "../slices/messagesSlice";
 import Container from 'react-bootstrap/Container';
 import Row from "react-bootstrap/esm/Row";
@@ -16,6 +16,7 @@ import cn from 'classnames';
 import Channels from '../components/Channels';
 import MessageTextInput from "../components/MessageTextInput";
 import ChatMessages from '../components/ChatMessages';
+import getData from '../api/getData';
 
 const Home = () => {
 
@@ -37,15 +38,42 @@ const Home = () => {
     })
       .then((res) => {
         batch(() => {
+          console.log(res.data);
+          const currentChannelName = res.data.channels.filter((channel) => channel.id === res.data.currentChannelId).map((channel) => channel.name)[0];
           dispatch(addChannels(res.data.channels));
-          // dispatch(setCurrentChannelId(res.data.currentChannelId));
+          //dispatch(setCurrentChannelId(res.data.currentChannelId));
+          //dispatch(setCurrentChannelName(currentChannelName));
           dispatch(addMessages(res.data.messages));
         })
         //console.log(res.data);
         
       })
 
+    //getData();
+
   });
+
+  useEffect(() => {
+
+    axios({
+      method: 'get',
+      url: '/api/v1/data',
+      headers: {Authorization : `Bearer ${localStorage.token}`},
+    })
+      .then((res) => {
+        batch(() => {
+          //console.log(res.data);
+          const currentChannelName = res.data.channels.filter((channel) => channel.id === res.data.currentChannelId).map((channel) => channel.name)[0];
+          //dispatch(addChannels(res.data.channels));
+          dispatch(setCurrentChannelId(res.data.currentChannelId));
+          dispatch(setCurrentChannelName(currentChannelName));
+          //dispatch(addMessages(res.data.messages));
+        })
+        //console.log(res.data);
+        
+      })
+
+  }, [])
 
   //axios.defaults.headers.common['Authorization'] = localStorage.token;
 
@@ -54,17 +82,13 @@ const Home = () => {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const channels = useSelector((state) => state.channels);
   const currentChannelId = useSelector((state) => state.currentChannel.currentChannelId);
+  const currentChannelName = useSelector((state) => state.currentChannel.currentChannelName);
   const messages = useSelector((state) => state.messages);
   const dispatch = useDispatch();
   //const activeChannelName = channels.ids[currentChannelId].name;
   const state = useSelector(state => state);
-  console.log(state)
+  //console.log(state)
   let activeChannelName = '';
-  if (state.channels.ids.length > 0) {
-    activeChannelName = channels.entities[currentChannelId].name;
-  }
-
-  
 
   return (
     
@@ -76,7 +100,7 @@ const Home = () => {
         <Col className="p-0 h-100">
           <div className="d-flex flex-column h-100">
             <Container className="bg-light mb-4 p-3 shadow-sm small">
-              <p className="m-0"><b># {activeChannelName}</b></p>
+              <p className="m-0"><b># {currentChannelName}</b></p>
               <span className="text-muted">{messages.ids.map((id) => messages.entities[id].channelId).filter((item) => item === currentChannelId).length} сообщений</span>
             </Container>
             <ChatMessages />

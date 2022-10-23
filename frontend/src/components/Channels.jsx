@@ -2,7 +2,7 @@ import React from "react";
 import Container from "react-bootstrap/esm/Container";
 import { useSelector } from "react-redux";
 import cn from 'classnames';
-import { setCurrentChannelId } from "../slices/currentChannelSlice";
+import { setCurrentChannelId, setCurrentChannelName } from "../slices/currentChannelSlice";
 import { useDispatch } from "react-redux";
 import { showAddChannelModal } from "../slices/channelOptionsSlice";
 
@@ -32,7 +32,10 @@ const Channels = () => {
               })
               return (
                 <li className="nav-item w-100" key={id}>
-                  <button type="button" className={channelButtonClassNames} onClick={() => { dispatch(setCurrentChannelId(id)) }}>
+                  <button type="button" className={channelButtonClassNames} onClick={() => {
+                     dispatch(setCurrentChannelId(id));
+                     dispatch(setCurrentChannelName(channels.entities[id].name));
+                     }}>
                     <span className="me-1">
                     #
                     </span>

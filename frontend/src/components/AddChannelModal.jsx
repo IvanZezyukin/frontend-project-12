@@ -6,6 +6,8 @@ import Modal from 'react-bootstrap/Modal';
 import { useFormik } from 'formik';
 import Form from 'react-bootstrap/Form';
 import io from 'socket.io-client';
+import { useEffect } from "react";
+import { setCurrentChannelId, setCurrentChannelName } from "../slices/currentChannelSlice";
 
 const socket = io.connect();
 
@@ -19,9 +21,21 @@ const AddChannelModal = () => {
       name: '',
     },
     onSubmit: values => {
-      socket.emit('newChannel', values);
+      socket.emit('newChannel', values, (response) => {
+        if (response.status === 'ok') {
+          dispatch(closeAddChannelModal());
+        }
+      });
     },
   });
+
+  useEffect(() => {
+    socket.on('newChannel', (data) => {
+      console.log(data.id);
+      dispatch(setCurrentChannelId(data.id));
+      dispatch(setCurrentChannelName(data.name));
+    });
+  }, [socket]);
 
   return (
     <Modal show={show} onHide={() => dispatch(closeAddChannelModal())}>
