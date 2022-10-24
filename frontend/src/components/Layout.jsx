@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loggedOut } from '../slices/authSlice';
 import Button from 'react-bootstrap/Button';
 import AddChannelModal from './AddChannelModal';
+import RemoveChannelModal from "./RemoveChannelModal";
 
 const Layout = () => {
 
@@ -30,6 +31,7 @@ const Layout = () => {
     </header>
 
     <AddChannelModal />
+    <RemoveChannelModal />
 
     <Outlet />
 

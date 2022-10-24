@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import cn from 'classnames';
 import { setCurrentChannelId, setCurrentChannelName } from "../slices/currentChannelSlice";
 import { useDispatch } from "react-redux";
-import { showAddChannelModal } from "../slices/channelOptionsSlice";
+import {showAddChannelModal, showRemoveChannelModal} from "../slices/channelOptionsSlice";
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -17,7 +17,7 @@ const Channels = () => {
 
   return (
     <>
-    
+
     <Container className="d-flex justify-content-between mb-2 ps-4 pe-2">
             <span>Каналы</span>
             <button type="button" className="p-0 text-primary btn btn-group-vertical border-0" onClick={() => dispatch(showAddChannelModal())}>
@@ -57,12 +57,12 @@ const Channels = () => {
                         <>
                         <Dropdown.Toggle active={id === currentChannelId} split variant={id === currentChannelId ? 'secondary' : 'light'} className={channelButtonMenuClassNames} />
                         <Dropdown.Menu>
-                          <Dropdown.Item href="#/action-1">Удалить</Dropdown.Item>
+                          <Dropdown.Item onClick={() => dispatch(showRemoveChannelModal())}>Удалить</Dropdown.Item>
                           <Dropdown.Item href="#/action-2">Переименовать</Dropdown.Item>
                         </Dropdown.Menu>
                         </>
                         )}
-                    
+
                   </Dropdown>
 
                 </li>
