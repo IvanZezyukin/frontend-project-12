@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isAddChannelModalActive: false,
   isRemoveChannelModalActive: false,
+  isRenameChannelModalActive: false,
 };
 
 const channelOptionsSlice = createSlice({
@@ -21,8 +22,14 @@ const channelOptionsSlice = createSlice({
     closeRemoveChannelModal: (state) => {
       state.isRemoveChannelModalActive = false;
     },
+    showRenameChannelModal: (state) => {
+      state.isRenameChannelModalActive = true;
+    },
+    closeRenameChannelModal: (state) => {
+      state.isRenameChannelModalActive = false;
+    },
   }
 });
 
-export const { showAddChannelModal, closeAddChannelModal, showRemoveChannelModal, closeRemoveChannelModal } = channelOptionsSlice.actions;
+export const { showAddChannelModal, closeAddChannelModal, showRemoveChannelModal, closeRemoveChannelModal, showRenameChannelModal, closeRenameChannelModal } = channelOptionsSlice.actions;
 export default channelOptionsSlice.reducer;

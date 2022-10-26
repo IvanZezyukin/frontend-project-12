@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import cn from 'classnames';
 import { setCurrentChannelId, setCurrentChannelName } from "../slices/currentChannelSlice";
 import { useDispatch } from "react-redux";
-import {showAddChannelModal, showRemoveChannelModal} from "../slices/channelOptionsSlice";
+import { showAddChannelModal, showRemoveChannelModal, showRenameChannelModal } from "../slices/channelOptionsSlice";
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -57,8 +57,8 @@ const Channels = () => {
                         <>
                         <Dropdown.Toggle active={id === currentChannelId} split variant={id === currentChannelId ? 'secondary' : 'light'} className={channelButtonMenuClassNames} />
                         <Dropdown.Menu>
-                          <Dropdown.Item onClick={() => dispatch(showRemoveChannelModal())}>Удалить</Dropdown.Item>
-                          <Dropdown.Item href="#/action-2">Переименовать</Dropdown.Item>
+                          <Dropdown.Item onClick={() => { dispatch(showRemoveChannelModal()); dispatch(setCurrentChannelId(id)); }}>Удалить</Dropdown.Item>
+                          <Dropdown.Item onClick={() => { dispatch(showRenameChannelModal()); dispatch(setCurrentChannelId(id)); dispatch(setCurrentChannelName(channels.entities[id].name)); }}>Переименовать</Dropdown.Item>
                         </Dropdown.Menu>
                         </>
                         )}
