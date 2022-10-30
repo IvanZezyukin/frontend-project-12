@@ -6,14 +6,20 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from 'react-redux';
 import store from './slices/index.js';
+import io from 'socket.io-client';
+import SocketApiContextProvider from './context/SocketApiContextProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const socket = io.connect();
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <SocketApiContextProvider socket={socket}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </SocketApiContextProvider>
     </Provider>
   </React.StrictMode>
 );
