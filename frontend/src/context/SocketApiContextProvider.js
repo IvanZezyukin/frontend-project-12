@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentChannelId, setCurrentChannelName } from "../slices/currentChannelSlice";
 import { closeAddChannelModal } from "../slices/channelOptionsSlice";
+import { closeRemoveChannelModal } from "../slices/channelOptionsSlice";
+import removeChannel from "../slices/channelsSlice";
 
 const SocketApiContextProvider = ({socket, children}) => {
 
@@ -10,9 +12,13 @@ const SocketApiContextProvider = ({socket, children}) => {
 
   useEffect(() => {
     socket.on('newChannel', (data) => {
-      console.log(data.id);
       dispatch(setCurrentChannelId(data.id));
       dispatch(setCurrentChannelName(data.name));
+    });
+
+    socket.on('removeChannel', ({ id }) => {
+      dispatch(setCurrentChannelId(1));
+      dispatch(removeChannel(id));
     });
   }, [socket]);
 
@@ -22,10 +28,18 @@ const SocketApiContextProvider = ({socket, children}) => {
         dispatch(closeAddChannelModal());
       }
     });
-  }
+  };
+
+  const removeChannel = (values) => {
+    socket.emit('removeChannel', values, (response) => {
+      if (response.status === 'ok') {
+        dispatch(closeRemoveChannelModal());
+      }
+    });
+  };
 
   return (
-    <SocketApiContext.Provider value={{ addNewChannel }}>
+    <SocketApiContext.Provider value={{ addNewChannel, removeChannel }}>
       {children}
     </SocketApiContext.Provider>
   )

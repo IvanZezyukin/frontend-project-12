@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {closeAddChannelModal} from "../slices/channelOptionsSlice";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -9,52 +9,44 @@ import {useFormik} from "formik";
 import { useEffect } from "react";
 import {setCurrentChannelId, setCurrentChannelName} from "../slices/currentChannelSlice";
 import {closeRemoveChannelModal} from "../slices/channelOptionsSlice";
-
-const socket = io.connect();
+import SocketApiContext from "../context/SocketApiContext";
 
 const removeChannelModal = () => {
 
+  const { removeChannel } = useContext(SocketApiContext);
+
   const show = useSelector((state) => state.channelOptions.isRemoveChannelModalActive);
+  const currentChannelId = useSelector((state) => state.currentChannel.currentChannelId);
+  const currentChannelObject = useSelector((state) => state.channels.entities[currentChannelId]);
   const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {},
     onSubmit: values => {
-      // socket.emit('newChannel', values, (response) => {
-      //   if (response.status === 'ok') {
-      //     dispatch(closeAddChannelModal());
-      //   }
-      // });
+      removeChannel(currentChannelObject);
+      formik.resetForm();
     },
   });
 
-  useEffect(() => {
-    // socket.on('newChannel', (data) => {
-    //   console.log(data.id);
-    //   dispatch(setCurrentChannelId(data.id));
-    //   dispatch(setCurrentChannelName(data.name));
-    // });
-  }, [socket]);
-
   return (
-    <Modal show={show} onHide={() => dispatch(closeRemoveChannelModal())}>
+    <Modal centered show={show} onHide={() => dispatch(closeRemoveChannelModal())}>
       <Modal.Header closeButton>
-        <Modal.Title>Подтвердите удаление канала</Modal.Title>
+        <Modal.Title>Удалить канал</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Вы действительно хотите удалить канал? Все сообщения из данного канала будут удалены.
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={() => dispatch(closeRemoveChannelModal())}>
-          Отменить
-        </Button>
+      <Modal.Body>Уверены?
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
-            <Button type="submit" variant="primary">
-              Отправить
-            </Button>
+            <div className="d-flex justify-content-end">
+              <Button className="me-2" variant="secondary" onClick={() => dispatch(closeRemoveChannelModal())}>
+                Отменить
+              </Button>
+              <Button type="submit" variant="danger">
+                Удалить
+              </Button>
+            </div>
           </Form.Group>
         </Form>
-      </Modal.Footer>
+      </Modal.Body>
     </Modal>
   )
 };
