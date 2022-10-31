@@ -1,13 +1,9 @@
 import React, { useContext } from "react";
-import {closeAddChannelModal} from "../slices/channelOptionsSlice";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import io from "socket.io-client";
 import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
-import { useEffect } from "react";
-import {setCurrentChannelId, setCurrentChannelName} from "../slices/currentChannelSlice";
 import {closeRemoveChannelModal} from "../slices/channelOptionsSlice";
 import SocketApiContext from "../context/SocketApiContext";
 

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentChannelId, setCurrentChannelName } from "../slices/currentChannelSlice";
 import { closeAddChannelModal } from "../slices/channelOptionsSlice";
 import { closeRemoveChannelModal } from "../slices/channelOptionsSlice";
-import removeChannel from "../slices/channelsSlice";
+import { remove } from "../slices/channelsSlice";
 
 const SocketApiContextProvider = ({socket, children}) => {
 
@@ -16,9 +16,9 @@ const SocketApiContextProvider = ({socket, children}) => {
       dispatch(setCurrentChannelName(data.name));
     });
 
-    socket.on('removeChannel', ({ id }) => {
+    socket.on('removeChannel', (data) => {
       dispatch(setCurrentChannelId(1));
-      dispatch(removeChannel(id));
+      dispatch(remove(data.id));
     });
   }, [socket]);
 
