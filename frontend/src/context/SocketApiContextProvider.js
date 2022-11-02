@@ -1,10 +1,10 @@
 import SocketApiContext from "./SocketApiContext";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { setCurrentChannelId, setCurrentChannelName } from "../slices/currentChannelSlice";
-import { closeAddChannelModal } from "../slices/channelOptionsSlice";
+import {closeAddChannelModal, closeRenameChannelModal} from "../slices/channelOptionsSlice";
 import { closeRemoveChannelModal } from "../slices/channelOptionsSlice";
-import { remove } from "../slices/channelsSlice";
+import {remove, updateChannel} from "../slices/channelsSlice";
 
 const SocketApiContextProvider = ({socket, children}) => {
 
@@ -19,6 +19,14 @@ const SocketApiContextProvider = ({socket, children}) => {
     socket.on('removeChannel', (data) => {
       dispatch(setCurrentChannelId(1));
       dispatch(remove(data.id));
+    });
+
+    socket.on('renameChannel', (data) => {
+      dispatch(setCurrentChannelName(data.name));
+      dispatch(updateChannel({
+        id: data.id,
+        changes: { name: data.name },
+      }));
     });
   }, [socket]);
 
@@ -38,8 +46,16 @@ const SocketApiContextProvider = ({socket, children}) => {
     });
   };
 
+  const renameChannel = (values) => {
+    socket.emit('renameChannel', values, (response) => {
+      if (response.status === 'ok') {
+        dispatch(closeRenameChannelModal());
+      }
+    });
+  };
+
   return (
-    <SocketApiContext.Provider value={{ addNewChannel, removeChannel }}>
+    <SocketApiContext.Provider value={{ addNewChannel, removeChannel, renameChannel }}>
       {children}
     </SocketApiContext.Provider>
   )
