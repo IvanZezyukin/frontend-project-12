@@ -11,6 +11,7 @@ const Layout = () => {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isRenameChannelModalActive = useSelector((state) => state.channelOptions.isRenameChannelModalActive);
 
   const logOut = () => {
     localStorage.removeItem('token');
@@ -33,7 +34,7 @@ const Layout = () => {
 
     <AddChannelModal />
     <RemoveChannelModal />
-    <RenameChannelModal />
+      {isRenameChannelModalActive && <RenameChannelModal />}
 
     <Outlet />
 

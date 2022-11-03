@@ -11,21 +11,23 @@ import * as Yup from "yup";
 
 const renameChannelModal = () => {
 
-  const show = useSelector((state) => state.channelOptions.isRenameChannelModalActive);
   const currentChannelId = useSelector((state) => state.currentChannel.currentChannelId);
   const currentChannelName = useSelector((state) => state.currentChannel.currentChannelName);
+  const currentChannels = useSelector((state) => Object.values(state.channels.entities).map((item) => item.name));
   const dispatch = useDispatch();
   const { renameChannel } = useContext(SocketApiContext);
 
-  // const inputEl = useRef(null);
-  // useEffect(() => {inputEl.current.focus()}, []);
+  const renameInput = useRef(null);
+  useEffect(() => {
+    renameInput.current.focus();
+  });
 
   const formik = useFormik({
     initialValues: {
-      name: '',
+      name: currentChannelName,
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Введите имя канала').trim(),
+      name: Yup.string().required('Введите имя канала').trim().notOneOf(currentChannels, 'Такой канал уже существует'),
     }),
     onSubmit: values => {
       const extendedValues = { id: currentChannelId, name: values.name };
@@ -35,7 +37,7 @@ const renameChannelModal = () => {
   });
 
   return (
-    <Modal centered show={show} onHide={() => { dispatch(closeRenameChannelModal()); formik.resetForm(); }}>
+    <Modal centered show onHide={() => { dispatch(closeRenameChannelModal()); formik.resetForm(); }}>
       <Modal.Header closeButton>
         <Modal.Title>Переименовать канал</Modal.Title>
       </Modal.Header>
@@ -50,7 +52,7 @@ const renameChannelModal = () => {
               onChange={formik.handleChange}
               value={formik.values.name}
               isInvalid={!!formik.errors.name}
-              // ref={inputEl}
+              ref={renameInput}
              />
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
