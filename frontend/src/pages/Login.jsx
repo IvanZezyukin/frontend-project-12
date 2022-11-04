@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { loggedIn, loggedOut, authError } from '../slices/authSlice';
 import Button from 'react-bootstrap/Button';
@@ -70,12 +70,12 @@ const Login = () => {
           <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
             <Image className="img-fluid p-4" src="./chat.png"/>
           </Col>
-          
+
           <Form className="col-12 col-md-6 mt-3 mt-mb-0 p-3" onSubmit={formik.handleSubmit}>
             <h1 className="text-center mb-4">Войти</h1>
               <Form.Group className="form-floating mb-3">
                 <FloatingLabel controlId="username" label="Имя пользователя" className="mb-3">
-                  <Form.Control type="username" placeholder="admin" onChange={formik.handleChange} value={formik.values.username} isInvalid={!!formik.errors.username} />
+                  <Form.Control onBlur={formik.handleBlur} type="username" placeholder="admin" onChange={formik.handleChange} value={formik.values.username} isInvalid={!!formik.errors.username && formik.touched.username} />
                   <Form.Control.Feedback type="invalid">
                     {formik.errors.username}
                   </Form.Control.Feedback>
@@ -83,7 +83,7 @@ const Login = () => {
               </Form.Group>
               <Form.Group className="form-floating mb-3" controlId="password">
                 <FloatingLabel controlId="password" label="Пароль" className="mb-3">
-                  <Form.Control type="password" placeholder="admin" onChange={formik.handleChange} value={formik.values.password} isInvalid={!!formik.errors.password} />
+                  <Form.Control onBlur={formik.handleBlur} type="password" placeholder="admin" onChange={formik.handleChange} value={formik.values.password} isInvalid={!!formik.errors.password && formik.touched.password} />
                   <Form.Control.Feedback type="invalid">
                     {formik.errors.password}
                   </Form.Control.Feedback>
@@ -96,7 +96,7 @@ const Login = () => {
         <Card.Footer className="p-4">
           <div className='text-center'>
             <span>Нет аккаунта? </span>
-            <a href="">Регистрация</a>
+            <Link to={'/signup'}>Регистрация</Link>
           </div>
         </Card.Footer>
       </Card>

@@ -5,6 +5,8 @@ const initialState = {
   isError: false,
   username: '',
   errorMessage: '',
+  isSignupError: false,
+  signupErrorMessage: '',
 };
 
 const authSlice = createSlice({
@@ -25,9 +27,19 @@ const authSlice = createSlice({
     },
     authErrorDismissal: (state) => {
       state.isError = false;
-    }  
+      state.errorMessage = '';
+    },
+    signupError: (state, action) => {
+      const { message } = action.payload;
+      state.isSignupError = true;
+      state.signupErrorMessage = message;
+    },
+    signupErrorDismissal: (state) => {
+      state.isSignupError = false;
+      state.signupErrorMessage = '';
+    },
   }
 });
 
-export const { loggedIn, loggedOut, authError, authErrorDismissal } = authSlice.actions;
+export const { loggedIn, loggedOut, authError, authErrorDismissal, signupError, signupErrorDismissal } = authSlice.actions;
 export default authSlice.reducer;
