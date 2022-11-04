@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import AddChannelModal from './AddChannelModal';
 import RemoveChannelModal from "./RemoveChannelModal";
 import RenameChannelModal from './RenameChannelModal';
+import { useTranslation } from 'react-i18next';
 
 const Layout = () => {
 
@@ -12,6 +13,7 @@ const Layout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isRenameChannelModalActive = useSelector((state) => state.channelOptions.isRenameChannelModalActive);
+  const { t } = useTranslation();
 
   const logOut = () => {
     localStorage.removeItem('token');
@@ -26,8 +28,8 @@ const Layout = () => {
     <header>
       <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
         <div className="container">
-          <Link className="navbar-brand" to={'/'}>Slack-Chat</Link>
-          {isAuth ? <Button onClick={logOut}>Выйти</Button> : null}
+          <Link className="navbar-brand" to={'/'}>{t('logo')}</Link>
+          {isAuth ? <Button onClick={logOut}>{t('logoutButton')}</Button> : null}
         </div>
       </nav>
     </header>
@@ -37,15 +39,6 @@ const Layout = () => {
       {isRenameChannelModalActive && <RenameChannelModal />}
 
     <Outlet />
-
-    {/* <footer>
-      <p />
-      <hr />
-      Technical data<br />
-      Status from redux state: {isAuth ? 'авторизован' : 'не авторизован'}<br />
-      Token: {localStorage.token}<br />
-      Username: {localStorage.username}<br />
-    </footer> */}
 
     </div>
   )

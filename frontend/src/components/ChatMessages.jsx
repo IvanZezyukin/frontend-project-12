@@ -16,7 +16,7 @@ const ChatMessages = () => {
         };
         return (
           <div className="text-break mb-2" key={messageId}>
-            <b>{localStorage.username}</b>: {messages.entities[messageId].message}
+            <b>{messages.entities[messageId].user}</b>: {messages.entities[messageId].message}
           </div>
         )
       })}
