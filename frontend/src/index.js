@@ -8,19 +8,14 @@ import { Provider } from 'react-redux';
 import store from './slices/index.js';
 import io from 'socket.io-client';
 import SocketApiContextProvider from './context/SocketApiContextProvider';
+import init from "./init";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const socket = io.connect();
+//const socket = io.connect();
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <SocketApiContextProvider socket={socket}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </SocketApiContextProvider>
-    </Provider>
+    {init()}
   </React.StrictMode>
 );
 
