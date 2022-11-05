@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import Container from 'react-bootstrap/Container';
 import { useSelector } from "react-redux";
 import filter from 'leo-profanity';
@@ -10,6 +10,14 @@ const ChatMessages = () => {
   filter.add(filter.getDictionary('en'));
   filter.add(filter.getDictionary('fr'));
   filter.add(filter.getDictionary('ru'));
+  const messagesEndRef = useRef(null);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  };
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages]);
 
 
   return (
@@ -26,6 +34,7 @@ const ChatMessages = () => {
           )
         })
       }
+      <div ref={messagesEndRef} />
     </Container>
   )
 };
