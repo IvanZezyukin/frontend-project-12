@@ -28,8 +28,8 @@ const Login = () => {
       password: '',
     },
     validationSchema: Yup.object({
-      username: Yup.string().required('Login is required'),
-      password: Yup.string().min(4, 'Must be 4 characters or more').required('Password is required'),
+      username: Yup.string().required(t('signinPage.validationRequired')),
+      password: Yup.string().required(t('signinPage.validationRequired')),
     }),
     onSubmit: values => {
       axios({

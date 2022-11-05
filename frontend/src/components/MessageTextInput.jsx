@@ -7,6 +7,7 @@ import io from 'socket.io-client';
 import { useEffect } from "react";
 import { addMessage } from "../slices/messagesSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from 'react-i18next';
 
 const socket = io.connect();
 
@@ -14,10 +15,11 @@ const MessageTextInput = () => {
 
   const dispatch = useDispatch();
   const currentChannelId = useSelector((state) => state.currentChannel.currentChannelId);
+  const { t } = useTranslation();
   const additionalData = {
     user: localStorage.username,
     channelId: currentChannelId,
-  }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -39,13 +41,13 @@ const MessageTextInput = () => {
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Form.Group className="py-1 border rounded-2 d-flex">
-        <Form.Control 
-          className="border-0 p-0 ps-2 form-control" 
-          name="message" 
-          aria-label="Новое сообщение" 
-          placeholder="Введите сообщение..." 
-          onChange={formik.handleChange} 
-          value={formik.values.message} 
+        <Form.Control
+          className="border-0 p-0 ps-2 form-control"
+          name="message"
+          // aria-label="Новое сообщение"
+          placeholder={t('messageTextInput.placeholder')}
+          onChange={formik.handleChange}
+          value={formik.values.message}
         />
         <button type="submit" className="btn btn-group-vertical ms-1 h-100 border-0" variant="light">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">

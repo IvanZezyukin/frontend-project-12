@@ -30,8 +30,8 @@ const Signup = () => {
     },
     validationSchema: Yup.object({
       username: Yup.string().required(t('signupPage.validationRequired')).min(3, t('signupPage.validationMin3Max20')).max(20, t('signupPage.validationMin3Max20')),
-      password: Yup.string().min(6, 'Must be 6 characters or more').required('Password is required'),
-      passwordCheck: Yup.string().required('Password confirmation is required').min(6, 'Must be 6 characters or more').oneOf([Yup.ref('password'), null], 'Passwords must match'),
+      password: Yup.string().min(6, t('signupPage.validationMin6')).required(t('signupPage.validationPasswordRequired')),
+      passwordCheck: Yup.string().required(t('signupPage.validationPasswordRequired')).min(6, t('signupPage.validationMin6')).oneOf([Yup.ref('password'), null], t('signupPage.validationMustMatch')),
     }),
     onSubmit: values => {
       axios({
@@ -49,7 +49,7 @@ const Signup = () => {
         .catch((err) => {
           let message = '';
           if (err.response.request.status === 409) {
-            message = 'Такой пользователь уже существует'
+            message = t('signupPage.userAlreadyExists')
           } else {
             message = err.message;
           }

@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 import Stack from 'react-bootstrap/Stack';
 import SocketApiContext from "../context/SocketApiContext";
 import * as Yup from "yup";
+import { useTranslation } from 'react-i18next';
 
 const renameChannelModal = () => {
 
@@ -16,6 +17,7 @@ const renameChannelModal = () => {
   const currentChannels = useSelector((state) => Object.values(state.channels.entities).map((item) => item.name));
   const dispatch = useDispatch();
   const { renameChannel } = useContext(SocketApiContext);
+  const { t } = useTranslation();
 
   const renameInput = useRef(null);
   useEffect(() => {
@@ -27,7 +29,7 @@ const renameChannelModal = () => {
       name: currentChannelName,
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Введите имя канала').trim().notOneOf(currentChannels, 'Такой канал уже существует'),
+      name: Yup.string().required(t('renameChannelModal.validation.required')).trim().notOneOf(currentChannels, t('renameChannelModal.validation.notOneOf')),
     }),
     onSubmit: values => {
       const extendedValues = { id: currentChannelId, name: values.name };
@@ -39,7 +41,7 @@ const renameChannelModal = () => {
   return (
     <Modal centered show onHide={() => { dispatch(closeRenameChannelModal()); formik.resetForm(); }}>
       <Modal.Header closeButton>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('renameChannelModal.title')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
 
@@ -47,8 +49,8 @@ const renameChannelModal = () => {
           <Form.Group className="mb-3">
             <Form.Control
               name="name"
-              aria-label="Новое название канала"
-              placeholder="Введите новое название канала..."
+              // aria-label="Новое название канала"
+              // placeholder="Введите новое название канала..."
               onChange={formik.handleChange}
               value={formik.values.name}
               isInvalid={!!formik.errors.name}
@@ -61,10 +63,10 @@ const renameChannelModal = () => {
          <div className="d-flex justify-content-end">
            <Stack direction="horizontal" gap={3}>
              <Button variant="secondary" onClick={() => { dispatch(closeRenameChannelModal()); formik.resetForm(); }}>
-               Отменить
+               {t('renameChannelModal.canselBtn')}
              </Button>
              <Button type="submit" variant="primary">
-                Отправить
+               {t('renameChannelModal.sendBtn')}
              </Button>
            </Stack>
           </div>

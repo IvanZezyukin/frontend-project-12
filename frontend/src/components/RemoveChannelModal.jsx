@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useFormik} from "formik";
 import {closeRemoveChannelModal} from "../slices/channelOptionsSlice";
 import SocketApiContext from "../context/SocketApiContext";
+import { useTranslation } from 'react-i18next';
 
 const removeChannelModal = () => {
 
@@ -15,6 +16,7 @@ const removeChannelModal = () => {
   const currentChannelId = useSelector((state) => state.currentChannel.currentChannelId);
   const currentChannelObject = useSelector((state) => state.channels.entities[currentChannelId]);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {},
@@ -27,17 +29,17 @@ const removeChannelModal = () => {
   return (
     <Modal centered show={show} onHide={() => dispatch(closeRemoveChannelModal())}>
       <Modal.Header closeButton>
-        <Modal.Title>Удалить канал</Modal.Title>
+        <Modal.Title>{t('removeChannelModal.deleteChannel')}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Уверены?
+      <Modal.Body>{t('removeChannelModal.sure')}
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
             <div className="d-flex justify-content-end">
               <Button className="me-2" variant="secondary" onClick={() => dispatch(closeRemoveChannelModal())}>
-                Отменить
+                {t('removeChannelModal.canselBtn')}
               </Button>
               <Button type="submit" variant="danger">
-                Удалить
+                {t('removeChannelModal.removeBtn')}
               </Button>
             </div>
           </Form.Group>

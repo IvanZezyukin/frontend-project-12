@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 const ChatMessages = () => {
 
   const messages = useSelector((state) => state.messages);
-  const user = useSelector((state) => state.auth.username);
   const currentChannelId = useSelector((state) => state.currentChannel.currentChannelId);
 
   return (

@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 import Form from 'react-bootstrap/Form';
 import SocketApiContext from "../context/SocketApiContext";
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
 const AddChannelModal = () => {
 
@@ -15,13 +16,14 @@ const AddChannelModal = () => {
   const show = useSelector((state) => state.channelOptions.isAddChannelModalActive);
   const currentChannels = useSelector((state) => Object.values(state.channels.entities).map((item) => item.name));
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const formik = useFormik({
     initialValues: {
       name: '',
     },
     validationSchema: Yup.object({
-      name: Yup.string().required('Введите имя канала').trim().notOneOf(currentChannels, 'Такой канал уже существует'),
+      name: Yup.string().required(t('addChannelModal.validation.required')).trim().notOneOf(currentChannels, t('addChannelModal.validation.notOneOf')),
     }),
     onSubmit: values => {
       addNewChannel(values);
@@ -32,18 +34,18 @@ const AddChannelModal = () => {
   return (
     <Modal centered show={show} onHide={() => { dispatch(closeAddChannelModal()); formik.resetForm(); }}>
       <Modal.Header closeButton>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>{t('addChannelModal.addChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
 
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
-            <Form.Control 
-              name="name" 
-              aria-label="Новый канал" 
-              placeholder="Введите название нового канала..." 
+            <Form.Control
+              name="name"
+              // aria-label="Новый канал"
+              // placeholder="Введите название нового канала..."
               onChange={formik.handleChange}
-              value={formik.values.name} 
+              value={formik.values.name}
               isInvalid={!!formik.errors.name}
               className='mb-2'
               autoFocus={true}
@@ -54,10 +56,10 @@ const AddChannelModal = () => {
           </Form.Group>
           <div className="d-flex justify-content-end">
             <Button className="me-2" variant="secondary" onClick={() => { dispatch(closeAddChannelModal()); formik.resetForm(); }}>
-              Отменить
+              {t('addChannelModal.cansel')}
             </Button>
             <Button type="submit" variant="primary">
-              Отправить
+              {t('addChannelModal.send')}
             </Button>
           </div>
         </Form>

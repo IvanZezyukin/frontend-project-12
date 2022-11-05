@@ -1,3 +1,6 @@
+import removeChannelModal from "../components/RemoveChannelModal";
+import renameChannelModal from "../components/RenameChannelModal";
+
 export default {
   translation: {
     loginButton: 'Войти',
@@ -24,6 +27,49 @@ export default {
       signupButton: 'Зарегистрироваться',
       validationRequired: 'Обязательное поле',
       validationMin3Max20: 'От 3 до 20 символов',
+      validationMin6: 'Не менее 6 символов',
+      validationPasswordRequired: 'Обязательное поле',
+      validationMustMatch: 'Пароли должны совпадать',
+      userAlreadyExists: 'Такой пользователь уже существует',
+    },
+    signinPage: {
+      validationRequired: 'Обязательное поле',
+      min6: 'Не менее 6 символов',
+    },
+    addChannelModal: {
+      validation: {
+        required: 'Обязательное поле',
+        notOneOf: 'Должно быть уникальным',
+      },
+      addChannel: 'Добавить канал',
+      cansel: 'Отменить',
+      send: 'Отправить',
+    },
+    alertAuth: {
+      errorText: 'Неверные имя пользователя или пароль',
+    },
+    channels: {
+      channels: 'Каналы',
+      delete: 'Удалить',
+      rename: 'Переименовать',
+    },
+    messageTextInput: {
+      placeholder: 'Введите сообщение...',
+    },
+    removeChannelModal: {
+      deleteChannel: 'Удалить канал',
+      sure: 'Уверены?',
+      canselBtn: 'Отменить',
+      removeBtn: 'Удалить',
+    },
+    renameChannelModal: {
+      validation: {
+        required: 'Обязательное поле',
+        notOneOf: 'Должно быть уникальным',
+      },
+      title: 'Переименовать канал',
+      canselBtn: 'Отменить',
+      sendBtn: 'Отправить',
     },
   },
 };
