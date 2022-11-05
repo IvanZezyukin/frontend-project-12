@@ -1,7 +1,5 @@
-import React from "react";
+import React, { useRef } from "react";
 import Form from 'react-bootstrap/Form';
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
 import { useFormik } from 'formik';
 import io from 'socket.io-client';
 import { useEffect } from "react";
@@ -12,6 +10,11 @@ import { useTranslation } from 'react-i18next';
 const socket = io.connect();
 
 const MessageTextInput = () => {
+
+  const messageTextInputControl = useRef(null);
+  useEffect(() => {
+    messageTextInputControl.current.focus();
+  });
 
   const dispatch = useDispatch();
   const currentChannelId = useSelector((state) => state.currentChannel.currentChannelId);
@@ -27,13 +30,12 @@ const MessageTextInput = () => {
     },
     onSubmit: values => {
       socket.emit('newMessage', Object.assign(additionalData, values));
-      console.log(Object.assign(additionalData, values))
+      formik.resetForm();
     }
   });
 
   useEffect(() => {
     socket.on('newMessage', (data) => {
-      console.log(data);
       dispatch(addMessage(data))
     });
   }, [socket]);
@@ -48,6 +50,7 @@ const MessageTextInput = () => {
           placeholder={t('messageTextInput.placeholder')}
           onChange={formik.handleChange}
           value={formik.values.message}
+          ref={messageTextInputControl}
         />
         <button type="submit" className="btn btn-group-vertical ms-1 h-100 border-0" variant="light">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
