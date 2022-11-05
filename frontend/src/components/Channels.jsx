@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 
 const Channels = () => {
 
@@ -16,6 +17,9 @@ const Channels = () => {
   const currentChannelId = useSelector((state) => state.currentChannel.currentChannelId);
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  filter.add(filter.getDictionary('en'));
+  filter.add(filter.getDictionary('fr'));
+  filter.add(filter.getDictionary('ru'));
 
   return (
     <>
@@ -51,7 +55,7 @@ const Channels = () => {
                       <span className="me-1">
                       #
                       </span>
-                      {channels.entities[id].name}
+                      {filter.clean(channels.entities[id].name)}
                     </Button>
                     {!channels.entities[id].removable ? (
                       null
