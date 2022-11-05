@@ -21,13 +21,13 @@ const init = () => {
 
   return (
     <Provider store={store}>
-      <SocketApiContextProvider socket={socket}>
-        <I18nextProvider i18n={i18n}>
+      <I18nextProvider i18n={i18n}>
+        <SocketApiContextProvider socket={socket}>
           <BrowserRouter>
             <App />
           </BrowserRouter>
-        </I18nextProvider>
-      </SocketApiContextProvider>
+        </SocketApiContextProvider>
+      </I18nextProvider>
     </Provider>
   )
 };

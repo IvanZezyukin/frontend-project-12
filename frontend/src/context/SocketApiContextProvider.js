@@ -5,10 +5,14 @@ import { setCurrentChannelId, setCurrentChannelName } from "../slices/currentCha
 import {closeAddChannelModal, closeRenameChannelModal} from "../slices/channelOptionsSlice";
 import { closeRemoveChannelModal } from "../slices/channelOptionsSlice";
 import {remove, updateChannel} from "../slices/channelsSlice";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from 'react-i18next';
 
 const SocketApiContextProvider = ({socket, children}) => {
 
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     socket.on('newChannel', (data) => {
@@ -34,6 +38,7 @@ const SocketApiContextProvider = ({socket, children}) => {
     socket.emit('newChannel', values, (response) => {
       if (response.status === 'ok') {
         dispatch(closeAddChannelModal());
+        toast.success(t('addChannelModal.channelCreated'));
       }
     });
   };
@@ -42,6 +47,7 @@ const SocketApiContextProvider = ({socket, children}) => {
     socket.emit('removeChannel', values, (response) => {
       if (response.status === 'ok') {
         dispatch(closeRemoveChannelModal());
+        toast.success(t('removeChannelModal.channelRemovedToast'));
       }
     });
   };
@@ -50,6 +56,7 @@ const SocketApiContextProvider = ({socket, children}) => {
     socket.emit('renameChannel', values, (response) => {
       if (response.status === 'ok') {
         dispatch(closeRenameChannelModal());
+        toast.success(t('renameChannelModal.channelRenamedToast'));
       }
     });
   };

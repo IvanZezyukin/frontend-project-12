@@ -35,6 +35,7 @@ export default {
     signinPage: {
       validationRequired: 'Обязательное поле',
       min6: 'Не менее 6 символов',
+      wrongCredentials: 'Неверные имя пользователя или пароль',
     },
     addChannelModal: {
       validation: {
@@ -44,6 +45,7 @@ export default {
       addChannel: 'Добавить канал',
       cansel: 'Отменить',
       send: 'Отправить',
+      channelCreated: 'Канал создан',
     },
     alertAuth: {
       errorText: 'Неверные имя пользователя или пароль',
@@ -61,6 +63,7 @@ export default {
       sure: 'Уверены?',
       canselBtn: 'Отменить',
       removeBtn: 'Удалить',
+      channelRemovedToast: 'Канал удален',
     },
     renameChannelModal: {
       validation: {
@@ -70,6 +73,7 @@ export default {
       title: 'Переименовать канал',
       canselBtn: 'Отменить',
       sendBtn: 'Отправить',
+      channelRenamedToast: 'Канал переименован',
     },
   },
 };

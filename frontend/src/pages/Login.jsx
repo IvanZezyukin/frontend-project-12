@@ -13,8 +13,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import React from 'react';
-import AlertAuth from '../components/AlertAuth';
 import { useTranslation } from 'react-i18next';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
 
@@ -45,17 +46,19 @@ const Login = () => {
           navigate("/");
         })
         .catch((err) => {
-          const message = err.message;
+          let message = '';
+          if (err.code === 'ERR_BAD_REQUEST') {
+            message = t('signinPage.wrongCredentials');
+          } else {
+            message = err.message;
+          }
           dispatch(authError({ message }));
+          toast.error(message);
         })
     },
   });
 
   return (
-
-  <>
-
-  <AlertAuth />
 
   <Container fluid className="h-100 d-flex flex-column">
   <Row className="justify-content-center align-content-center h-100">
@@ -98,8 +101,6 @@ const Login = () => {
     </Col>
   </Row>
   </Container>
-
-  </>
 
   )
 

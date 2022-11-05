@@ -13,8 +13,9 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import {signupError, loggedIn} from "../slices/authSlice";
-import AlertSignup from "../components/AlertSignup";
 import { useTranslation } from 'react-i18next';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
 
@@ -54,14 +55,12 @@ const Signup = () => {
             message = err.message;
           }
           dispatch(signupError({ message }));
+          toast.error(message);
         })
     },
   });
 
   return (
-    <>
-
-      <AlertSignup />
 
     <Container fluid className="h-100 d-flex flex-column">
       <Row className="justify-content-center align-content-center h-100">
@@ -107,8 +106,6 @@ const Signup = () => {
         </Col>
       </Row>
     </Container>
-
-    </>
 
   )
 };

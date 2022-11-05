@@ -6,6 +6,8 @@ import AddChannelModal from './AddChannelModal';
 import RemoveChannelModal from "./RemoveChannelModal";
 import RenameChannelModal from './RenameChannelModal';
 import { useTranslation } from 'react-i18next';
+import { ToastContainer, toast } from 'react-toastify';
+import React from "react";
 
 const Layout = () => {
 
@@ -37,6 +39,7 @@ const Layout = () => {
     <AddChannelModal />
     <RemoveChannelModal />
       {isRenameChannelModalActive && <RenameChannelModal />}
+      <ToastContainer />
 
     <Outlet />
 
