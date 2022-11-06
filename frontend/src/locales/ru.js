@@ -66,7 +66,7 @@ export default {
       sure: 'Уверены?',
       canselBtn: 'Отменить',
       removeBtn: 'Удалить',
-      channelRemovedToast: 'Канал удален',
+      channelRemovedToast: 'Канал удалён',
     },
     renameChannelModal: {
       validation: {
