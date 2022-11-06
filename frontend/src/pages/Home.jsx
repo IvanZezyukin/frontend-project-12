@@ -59,6 +59,7 @@ const Home = () => {
           dispatch(setCurrentChannelName(currentChannelName));
         });
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -74,7 +75,7 @@ const Home = () => {
               <p className="m-0">
                 <b>
                   #
-                  {filter.clean(currentChannelName)}
+                  {` ${filter.clean(currentChannelName)}`}
                 </b>
               </p>
               <span className="text-muted">
