@@ -32,7 +32,7 @@ const Signup = () => {
     validationSchema: Yup.object({
       username: Yup.string().required(t('signupPage.validationRequired')).min(3, t('signupPage.validationMin3Max20')).max(20, t('signupPage.validationMin3Max20')),
       password: Yup.string().min(6, t('signupPage.validationMin6')).required(t('signupPage.validationPasswordRequired')),
-      passwordCheck: Yup.string().required(t('signupPage.validationPasswordRequired')).min(6, t('signupPage.validationMin6')).oneOf([Yup.ref('password'), null], t('signupPage.validationMustMatch')),
+      passwordCheck: Yup.string().required(t('signupPage.validationPasswordRequired')).oneOf([Yup.ref('password'), null], t('signupPage.validationMustMatch')),
     }),
     onSubmit: values => {
       axios({
