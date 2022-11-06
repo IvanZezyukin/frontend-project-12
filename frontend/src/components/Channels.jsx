@@ -58,7 +58,7 @@ const Channels = () => {
                       ) : (
                         <>
                         <Dropdown.Toggle active={id === currentChannelId} split variant={id === currentChannelId ? 'secondary' : 'light'} className={channelButtonMenuClassNames}>
-                          <span class="visually-hidden">{t('channels.dropdownSpan')}</span>
+                          <span className="visually-hidden">{t('channels.dropdownSpan')}</span>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                           <Dropdown.Item onClick={() => { dispatch(showRemoveChannelModal()); dispatch(setCurrentChannelId(id)); }}>{t('channels.delete')}</Dropdown.Item>

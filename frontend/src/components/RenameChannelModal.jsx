@@ -47,7 +47,7 @@ const renameChannelModal = () => {
 
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group className="mb-3">
-            <Form.Label className="visually-hidden">{t('renameChannelModal.label')}</Form.Label>
+            <Form.Label htmlFor="name" className="visually-hidden">{t('renameChannelModal.label')}</Form.Label>
             <Form.Control
               name="name"
               // aria-label="Новое название канала"

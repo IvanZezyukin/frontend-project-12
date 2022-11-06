@@ -41,7 +41,7 @@ const AddChannelModal = () => {
 
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
-            <Form.Label className="visually-hidden">{t('addChannelModal.label')}</Form.Label>
+            <Form.Label htmlFor="name" className="visually-hidden">{t('addChannelModal.label')}</Form.Label>
               <Form.Control
                 name="name"
                 // aria-label="Новый канал"
