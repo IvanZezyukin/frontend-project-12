@@ -44,6 +44,7 @@ const AddChannelModal = () => {
             <Form.Label htmlFor="name" className="visually-hidden">{t('addChannelModal.label')}</Form.Label>
               <Form.Control
                 name="name"
+                id="name"
                 // aria-label="Новый канал"
                 // placeholder="Введите название нового канала..."
                 onChange={formik.handleChange}
