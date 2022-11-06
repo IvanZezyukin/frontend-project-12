@@ -46,7 +46,7 @@ const MessageTextInput = () => {
         <Form.Control
           className="border-0 p-0 ps-2 form-control"
           name="message"
-          // aria-label="Новое сообщение"
+          aria-label={t('messageTextInput.ariaLabel')}
           placeholder={t('messageTextInput.placeholder')}
           onChange={formik.handleChange}
           value={formik.values.message}

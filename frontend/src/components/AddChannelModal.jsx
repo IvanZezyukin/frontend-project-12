@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 import SocketApiContext from "../context/SocketApiContext";
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 const AddChannelModal = () => {
 
@@ -40,16 +41,17 @@ const AddChannelModal = () => {
 
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
-            <Form.Control
-              name="name"
-              // aria-label="Новый канал"
-              // placeholder="Введите название нового канала..."
-              onChange={formik.handleChange}
-              value={formik.values.name}
-              isInvalid={!!formik.errors.name}
-              className='mb-2'
-              autoFocus={true}
-            />
+            <Form.Label className="visually-hidden">{t('addChannelModal.label')}</Form.Label>
+              <Form.Control
+                name="name"
+                // aria-label="Новый канал"
+                // placeholder="Введите название нового канала..."
+                onChange={formik.handleChange}
+                value={formik.values.name}
+                isInvalid={!!formik.errors.name}
+                className='mb-2'
+                autoFocus={true}
+              />
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
             </Form.Control.Feedback>

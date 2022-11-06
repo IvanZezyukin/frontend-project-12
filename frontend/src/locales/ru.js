@@ -46,6 +46,7 @@ export default {
       cansel: 'Отменить',
       send: 'Отправить',
       channelCreated: 'Канал создан',
+      label: 'Имя канала',
     },
     alertAuth: {
       errorText: 'Неверные имя пользователя или пароль',
@@ -54,9 +55,11 @@ export default {
       channels: 'Каналы',
       delete: 'Удалить',
       rename: 'Переименовать',
+      dropdownSpan: 'Управление каналом',
     },
     messageTextInput: {
       placeholder: 'Введите сообщение...',
+      ariaLabel: 'Новое сообщение',
     },
     removeChannelModal: {
       deleteChannel: 'Удалить канал',
@@ -74,6 +77,7 @@ export default {
       canselBtn: 'Отменить',
       sendBtn: 'Отправить',
       channelRenamedToast: 'Канал переименован',
+      label: 'Имя канала',
     },
   },
 };
