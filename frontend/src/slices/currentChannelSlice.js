@@ -1,9 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+/* eslint-disable no-param-reassign */
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   currentChannelId: 1,
   currentChannelName: '',
-}
+};
 
 const currentChannelSlice = createSlice({
   name: 'currentChannel',
@@ -15,7 +16,7 @@ const currentChannelSlice = createSlice({
     setCurrentChannelName: (state, action) => {
       state.currentChannelName = action.payload;
     },
-  }
+  },
 });
 
 export const { setCurrentChannelId, setCurrentChannelName } = currentChannelSlice.actions;

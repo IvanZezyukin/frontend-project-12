@@ -24,5 +24,9 @@
     "@rollbar/react": "^0.11.1",
     "npm": "^8.19.2",
     "react-router-dom": "^6.4.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.27.0",
+    "eslint-plugin-react": "^7.31.10"
   }
 }

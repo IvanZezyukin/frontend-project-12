@@ -1,20 +1,18 @@
-import React, { useContext } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeAddChannelModal } from "../slices/channelOptionsSlice";
+import React, { useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useFormik } from 'formik';
 import Form from 'react-bootstrap/Form';
-import SocketApiContext from "../context/SocketApiContext";
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import SocketApiContext from '../context/SocketApiContext';
+import { closeAddChannelModal } from '../slices/channelOptionsSlice';
 
 const AddChannelModal = () => {
-
   const { addNewChannel } = useContext(SocketApiContext);
-
   const show = useSelector((state) => state.channelOptions.isAddChannelModalActive);
+  // eslint-disable-next-line max-len
   const currentChannels = useSelector((state) => Object.values(state.channels.entities).map((item) => item.name));
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -26,13 +24,14 @@ const AddChannelModal = () => {
     validationSchema: Yup.object({
       name: Yup.string().required(t('addChannelModal.validation.required')).trim().notOneOf(currentChannels, t('addChannelModal.validation.notOneOf')),
     }),
-    onSubmit: values => {
+    onSubmit: (values) => {
       addNewChannel(values);
       formik.resetForm();
     },
   });
 
   return (
+    // eslint-disable-next-line max-len
     <Modal centered show={show} onHide={() => { dispatch(closeAddChannelModal()); formik.resetForm(); }}>
       <Modal.Header closeButton>
         <Modal.Title>{t('addChannelModal.addChannel')}</Modal.Title>
@@ -42,17 +41,15 @@ const AddChannelModal = () => {
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
             <Form.Label htmlFor="name" className="visually-hidden">{t('addChannelModal.label')}</Form.Label>
-              <Form.Control
-                name="name"
-                id="name"
-                // aria-label="Новый канал"
-                // placeholder="Введите название нового канала..."
-                onChange={formik.handleChange}
-                value={formik.values.name}
-                isInvalid={!!formik.errors.name}
-                className='mb-2'
-                autoFocus={true}
-              />
+            <Form.Control
+              name="name"
+              id="name"
+              onChange={formik.handleChange}
+              value={formik.values.name}
+              isInvalid={!!formik.errors.name}
+              className="mb-2"
+              autoFocus
+            />
             <Form.Control.Feedback type="invalid">
               {formik.errors.name}
             </Form.Control.Feedback>
@@ -69,7 +66,7 @@ const AddChannelModal = () => {
 
       </Modal.Body>
     </Modal>
-  )
+  );
 };
 
 export default AddChannelModal;

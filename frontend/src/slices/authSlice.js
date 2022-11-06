@@ -1,7 +1,8 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isAuth: localStorage.token ? true : false,
+  isAuth: !!localStorage.token,
   isError: false,
   username: '',
   errorMessage: '',
@@ -38,8 +39,10 @@ const authSlice = createSlice({
       state.isSignupError = false;
       state.signupErrorMessage = '';
     },
-  }
+  },
 });
 
-export const { loggedIn, loggedOut, authError, authErrorDismissal, signupError, signupErrorDismissal } = authSlice.actions;
+export const {
+  loggedIn, loggedOut, authError, authErrorDismissal, signupError, signupErrorDismissal,
+} = authSlice.actions;
 export default authSlice.reducer;

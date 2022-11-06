@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+/* eslint-disable no-param-reassign */
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isAddChannelModalActive: false,
@@ -28,8 +29,11 @@ const channelOptionsSlice = createSlice({
     closeRenameChannelModal: (state) => {
       state.isRenameChannelModalActive = false;
     },
-  }
+  },
 });
 
-export const { showAddChannelModal, closeAddChannelModal, showRemoveChannelModal, closeRemoveChannelModal, showRenameChannelModal, closeRenameChannelModal } = channelOptionsSlice.actions;
+export const {
+  // eslint-disable-next-line max-len
+  showAddChannelModal, closeAddChannelModal, showRemoveChannelModal, closeRemoveChannelModal, showRenameChannelModal, closeRenameChannelModal,
+} = channelOptionsSlice.actions;
 export default channelOptionsSlice.reducer;

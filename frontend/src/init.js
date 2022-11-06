@@ -1,17 +1,16 @@
-import React from "react";
+import React from 'react';
 import { Provider } from 'react-redux';
-import store from './slices/index.js';
-import SocketApiContextProvider from './context/SocketApiContextProvider';
-import io from "socket.io-client";
-import { BrowserRouter } from "react-router-dom";
-import App from "./App";
+import io from 'socket.io-client';
+import { BrowserRouter } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
-import resources from './locales/index';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import resources from './locales/index';
+import App from './App';
+import SocketApiContextProvider from './context/SocketApiContextProvider';
+import store from './slices/index.js';
 
 const init = () => {
-
   const rollbarConfig = {
     accessToken: '1769bdc0a62741e0b9918ab76332bcbe',
     captureUncaught: true,
@@ -43,7 +42,7 @@ const init = () => {
         </Provider>
       </ErrorBoundary>
     </RollbarProvider>
-  )
+  );
 };
 
 export default init;

@@ -1,6 +1,3 @@
-import removeChannelModal from "../components/RemoveChannelModal";
-import renameChannelModal from "../components/RenameChannelModal";
-
 export default {
   translation: {
     loginButton: 'Войти',

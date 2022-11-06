@@ -1,16 +1,15 @@
-import SocketApiContext from "./SocketApiContext";
-import { useEffect } from "react";
-import {useDispatch, useSelector} from "react-redux";
-import { setCurrentChannelId, setCurrentChannelName } from "../slices/currentChannelSlice";
-import {closeAddChannelModal, closeRenameChannelModal} from "../slices/channelOptionsSlice";
-import { closeRemoveChannelModal } from "../slices/channelOptionsSlice";
-import {remove, updateChannel} from "../slices/channelsSlice";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import SocketApiContext from './SocketApiContext';
+import { setCurrentChannelId, setCurrentChannelName } from '../slices/currentChannelSlice';
+import { closeAddChannelModal, closeRenameChannelModal, closeRemoveChannelModal } from '../slices/channelOptionsSlice';
+import { remove, updateChannel } from '../slices/channelsSlice';
+import 'react-toastify/dist/ReactToastify.css';
+import { addMessage } from '../slices/messagesSlice';
 
-const SocketApiContextProvider = ({socket, children}) => {
-
+const SocketApiContextProvider = ({ socket, children }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -24,7 +23,9 @@ const SocketApiContextProvider = ({socket, children}) => {
       dispatch(setCurrentChannelId(1));
       dispatch(remove(data.id));
     });
-
+    socket.on('newMessage', (data) => {
+      dispatch(addMessage(data));
+    });
     socket.on('renameChannel', (data) => {
       dispatch(setCurrentChannelName(data.name));
       dispatch(updateChannel({
@@ -32,7 +33,7 @@ const SocketApiContextProvider = ({socket, children}) => {
         changes: { name: data.name },
       }));
     });
-  }, [socket]);
+  }, [dispatch, socket]);
 
   const addNewChannel = (values) => {
     socket.emit('newChannel', values, (response) => {
@@ -62,10 +63,11 @@ const SocketApiContextProvider = ({socket, children}) => {
   };
 
   return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <SocketApiContext.Provider value={{ addNewChannel, removeChannel, renameChannel }}>
       {children}
     </SocketApiContext.Provider>
-  )
+  );
 };
 
 export default SocketApiContextProvider;

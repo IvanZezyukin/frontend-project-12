@@ -1,24 +1,23 @@
-import React from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Image from "react-bootstrap/Image";
-import Form from "react-bootstrap/Form";
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Button from "react-bootstrap/Button";
-import {useNavigate} from "react-router-dom";
-import Container from "react-bootstrap/Container";
-import {useDispatch} from "react-redux";
-import {useFormik} from "formik";
-import * as Yup from "yup";
-import axios from "axios";
-import {signupError, loggedIn} from "../slices/authSlice";
+import React from 'react';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Card from 'react-bootstrap/Card';
+import Image from 'react-bootstrap/Image';
+import Form from 'react-bootstrap/Form';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import { useDispatch } from 'react-redux';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
+import { signupError, loggedIn } from '../slices/authSlice';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -34,29 +33,30 @@ const Signup = () => {
       password: Yup.string().min(6, t('signupPage.validationMin6')).required(t('signupPage.validationPasswordRequired')),
       passwordCheck: Yup.string().required(t('signupPage.validationPasswordRequired')).oneOf([Yup.ref('password'), null], t('signupPage.validationMustMatch')),
     }),
-    onSubmit: values => {
+    onSubmit: (values) => {
       axios({
         method: 'post',
         url: '/api/v1/signup',
         data: values,
-        headers: {'content-type':'application/json'}
+        headers: { 'content-type': 'application/json' },
       })
         .then((res) => {
           localStorage.setItem('token', res.data.token);
           localStorage.setItem('username', res.data.username);
           dispatch(loggedIn(res.data.username));
-          navigate("/");
+          navigate('/');
         })
         .catch((err) => {
+          // eslint-disable-next-line functional/no-let
           let message = '';
           if (err.response.request.status === 409) {
-            message = t('signupPage.userAlreadyExists')
+            message = t('signupPage.userAlreadyExists');
           } else {
             message = err.message;
           }
           dispatch(signupError({ message }));
           toast.error(message);
-        })
+        });
     },
   });
 
@@ -68,7 +68,7 @@ const Signup = () => {
           <Card className="shadow-sm">
             <Card.Body className="row p-5">
               <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
-                <Image className="img-fluid p-4" src="./chat.png"/>
+                <Image className="img-fluid p-4" src="./chat.png" />
               </Col>
 
               <Form className="col-12 col-md-6 mt-3 mt-mb-0 p-3" onSubmit={formik.handleSubmit}>
@@ -107,7 +107,7 @@ const Signup = () => {
       </Row>
     </Container>
 
-  )
+  );
 };
 
-export {Signup};
+export default Signup;

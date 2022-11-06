@@ -1,17 +1,15 @@
-import React, { useContext } from "react";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import {useDispatch, useSelector} from "react-redux";
-import {useFormik} from "formik";
-import {closeRemoveChannelModal} from "../slices/channelOptionsSlice";
-import SocketApiContext from "../context/SocketApiContext";
+import React, { useContext } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { closeRemoveChannelModal } from '../slices/channelOptionsSlice';
+import SocketApiContext from '../context/SocketApiContext';
 
-const removeChannelModal = () => {
-
+const RemoveChannelModal = () => {
   const { removeChannel } = useContext(SocketApiContext);
-
   const show = useSelector((state) => state.channelOptions.isRemoveChannelModalActive);
   const currentChannelId = useSelector((state) => state.currentChannel.currentChannelId);
   const currentChannelObject = useSelector((state) => state.channels.entities[currentChannelId]);
@@ -20,7 +18,7 @@ const removeChannelModal = () => {
 
   const formik = useFormik({
     initialValues: {},
-    onSubmit: values => {
+    onSubmit: () => {
       removeChannel(currentChannelObject);
       formik.resetForm();
     },
@@ -31,7 +29,8 @@ const removeChannelModal = () => {
       <Modal.Header closeButton>
         <Modal.Title>{t('removeChannelModal.deleteChannel')}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{t('removeChannelModal.sure')}
+      <Modal.Body>
+        {t('removeChannelModal.sure')}
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group>
             <div className="d-flex justify-content-end">
@@ -46,7 +45,7 @@ const removeChannelModal = () => {
         </Form>
       </Modal.Body>
     </Modal>
-  )
+  );
 };
 
-export default removeChannelModal;
+export default RemoveChannelModal;
